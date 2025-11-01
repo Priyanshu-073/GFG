@@ -10,30 +10,43 @@ class Solution {
         vector<int> arr;
         
         while(i<n1 && j<n2){
+            if(i>0 && a[i-1] == a[i]){
+                i++;
+                continue;
+            }
+            if(j>0 && b[j-1] == b[j]){
+                j++;
+                continue;
+            }
         
             if(a[i]<b[j]){
                 arr.push_back(a[i]);
                 i++;
-            }else{
+            }else if(a[i]>b[j]){
                 arr.push_back(b[j]);
                 j++;
+            }else{
+                arr.push_back(a[i]);
+            i++;
+            j++;
             }
-            // k++;
         }
-        
         while(i<n1){
+             if(i>0 && a[i-1] == a[i]){
+                i++;
+                continue;
+            }
             arr.push_back(a[i]);
             i++;
-            // k++;
         }
-        
         while(j<n2){
+             if(j>0 && b[j-1] == b[j]){
+                j++;
+                continue;
+            }
             arr.push_back(b[j]);
             j++;
-            // k++;
         }
-        arr.erase(unique(arr.begin(), arr.end()), arr.end());
-
         
         return arr;
     }
