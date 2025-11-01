@@ -1,43 +1,50 @@
 class Solution {
   public:
-    void merge(vector<int>& arr,int s,int m,int e){
-        int l = s;
-        int r = m+1;
-        int idx = 0;
-        vector<int> temp(e-s+1);
-        while(l <= m && r<=e){
-            if(arr[l] < arr[r]){
-                temp[idx] = arr[l];
-                l++;
+    void merge(vector<int>& arr,int left,int mid,int right){
+        int n1 = mid-left+1;
+        int n2 = right-mid;
+        
+        vector<int>L(n1),R(n2);
+        
+        for(int i=0;i<n1;i++){
+            L[i] = arr[left+i];
+        }
+        
+        for(int j=0;j<n2;j++){
+            R[j] = arr[mid+1+j];
+        }
+        
+        int i=0;
+        int j=0;
+        int k=left;
+        
+        while(i<n1 && j<n2){
+            if(L[i]<R[j]){
+                arr[k] = L[i];
+                i++;
             }else{
-                temp[idx] = arr[r];
-                r++;
+                arr[k] = R[j];
+                j++;
             }
-            idx++;
+            k++;
         }
-        while(l <= m){
-            temp[idx] = arr[l];
-            l++;
-            idx++;
+        while(i<n1){
+            arr[k] = L[i];
+            i++;
+            k++;
         }
-        while(r<=e){
-            temp[idx] = arr[r];
-            r++;
-            idx++;
+        while(j<n2){
+            arr[k] = R[j];
+            j++;
+            k++;
         }
-        idx=0;
-        while(s<=e){
-            arr[s] = temp[idx];
-            s++;
-            idx++;
-        }
-    } 
+    }
     void mergeSort(vector<int>& arr, int l, int r) {
         // code here
-        if(l == r){
-            return ;
+        if(l >= r){
+            return;
         }
-        int mid = (l+r)/2;
+        int mid = l+(r-l)/2;
         mergeSort(arr,l,mid);
         mergeSort(arr,mid+1,r);
         merge(arr,l,mid,r);
